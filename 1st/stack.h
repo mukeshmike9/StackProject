@@ -71,4 +71,12 @@ void pushToStack(struct stack *stackHead, int value);
  */
 int popFromStack(struct stack *stackHead);
 
+/**
+ * @brief Checks if the stack is empty or not
+ * 
+ * @param stackHead : Pointer to stack Metadata
+ * @return int 0 if empty -1 otherwise
+ */
+int isStackEmpty(struct stack *stackHead);
+
 #endif

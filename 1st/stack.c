@@ -49,6 +49,16 @@ void destroyStack(struct stack *stackHead)
     free(stackHead);
 }
 
+int isStackEmpty(struct stack *stackHead)
+{
+    if(stackHead->noOfItems > -1)
+    {
+        return 0;
+    }
+
+    return -1;
+}
+
 /***************************************************************
           Only to be used for debugging purposes
 ***************************************************************/
