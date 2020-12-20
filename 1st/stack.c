@@ -25,17 +25,18 @@ struct stack* initStack(int stackSize)
     return freshStack;
 }
 
-void pushToStack(struct stack* stackHead, int value)
+int pushToStack(struct stack* stackHead, int value)
 {
     if((stackHead->noOfItems + 1) >= stackHead->capacity)
     {
         printf("\n******************************\n");
         printf("Exception: Stackoverflow...!!!\n");
         printf("******************************\n\n");
-        return;
+        return -1;
     }
 
     stackHead->dataArray[++stackHead->noOfItems] = value;
+    return 0;
 }
 
 int popFromStack(struct stack *stackHead)

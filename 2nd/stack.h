@@ -12,18 +12,25 @@
 #include <stdio.h>
 
 /**
+ * @brief Stack Node
+ * @param data : Integer Data
+ * @param next : Pointer to next node
+ * @param prev : Pointer to the previous node
+ */
+struct stackNode {
+    int data;
+    struct stackNode *next;
+    struct stackNode *prev;
+};
+
+/**
  * @brief Stack Metadata
- * @param noOfItems : Number of items currently in stack,
- * -1 means stack is empty
- * @param capacity : Size of Stack
- * @param dataArray : Array to hold the data values in a stack
- * We are using integer so as to store 32bits in a single data cell
- * as on a 64 bit CPU Arch 
+ * @param basePointer : pointer to the base node of stack
+ * @param stackPointer : pointer to the top of the stack
  */
 struct stack {
-    int noOfItems;
-    int capacity;
-    int *dataArray;
+    struct stackNode *basePointer;
+    struct stackNode *stackPointer;
 };
 
 /**
@@ -41,18 +48,6 @@ struct stack* initStack(int stackSize);
  */
 void destroyStack(struct stack *stackHead);
 
-
-/**
- * @brief This function prints the stack data, should only be used for 
- *        debugging purposes
- * 
- * @param stackHead : Pointer to The stack head whose data is to be printed
- * @param printData : If 1 print Data values too else not
- *                    boolean can also be used but its not a default data type hence
- *                    using char as it only uses 1 byte
- */
-void printStack(struct stack *stackHead, char printArg);
-
 /**
  * @brief This function pushes data to stack
  * 
@@ -61,6 +56,15 @@ void printStack(struct stack *stackHead, char printArg);
  * @return int 0 if succeeded, -1 otherwise
  */
 int pushToStack(struct stack *stackHead, int value);
+
+/**
+ * @brief This function pushes data to bottom of stack
+ * 
+ * @param stackHead : Pointer to stack Metadata 
+ * @param value : value to be pushed
+ * @return int 0 if succeeded, -1 otherwise
+ */
+int pushToBottom(struct stack *stackHead, int value);
 
 /**
  * @brief This functions Pops a value from the stack
@@ -79,5 +83,23 @@ int popFromStack(struct stack *stackHead);
  * @return int 0 if empty -1 otherwise
  */
 int isStackEmpty(struct stack *stackHead);
+
+/**
+ * @brief Fill Dummy Values in Data
+ * 
+ * @param stackHead : Pointer to stack Metadata
+ */
+void fillDummyValues(struct stack *stackHead);
+
+/**
+ * @brief This function prints the stack data, should only be used for 
+ *        debugging purposes
+ * 
+ * @param stackHead : Pointer to The stack head whose data is to be printed
+ * @param printData : If 1 print Data values too else not
+ *                    boolean can also be used but its not a default data type hence
+ *                    using char as it only uses 1 byte
+ */
+void printStack(struct stack *stackHead, char printArg);
 
 #endif

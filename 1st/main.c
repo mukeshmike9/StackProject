@@ -27,8 +27,9 @@ int main()
     char inputString[101];
     char currentChar, charFromStack, validateChar;
     char isError = 0;
+    
     //Using the size same as string
-    struct stack *stackHead = initStack(5);
+    struct stack *stackHead = initStack(100);
 
     printf("Enter the String with symbols\n");
 
@@ -84,9 +85,6 @@ int main()
     {
         printf(SUCCESS_STRING);
     }
-
-//Label to safely exit the program
-exit_program:
 
     //Free the memory allocated to stack
     destroyStack(stackHead);
