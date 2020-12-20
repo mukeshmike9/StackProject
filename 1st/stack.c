@@ -43,6 +43,12 @@ int popFromStack(struct stack *stackHead)
     return stackHead->dataArray[stackHead->noOfItems--];
 }
 
+void destroyStack(struct stack *stackHead)
+{
+    free(stackHead->dataArray);
+    free(stackHead);
+}
+
 /***************************************************************
           Only to be used for debugging purposes
 ***************************************************************/
