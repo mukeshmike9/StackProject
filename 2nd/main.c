@@ -18,7 +18,7 @@ void reverseStack(struct stack* stackHead);
 //Return 0 to the calling OS for success execution
 int main()
 {
-    //Using the size same as string
+    //Using the size as 10
     struct stack *stackHead = initStack(10);
     fillDummyValues(stackHead);
     printStack(stackHead, STACK_PRINT_ALL);
