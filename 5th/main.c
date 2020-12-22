@@ -10,6 +10,8 @@ struct dualStack {
     int stackPointer1;
     int basePointer2;
     int stackPointer2;
+    int basePointer3;
+    int stackPointer3;
     int *array;
 } stackHead; //Initializing a single instance of stack 
 
@@ -75,8 +77,6 @@ int main()
                 printf("Popped Value: %d\n", value);
             break;
             case 2:
-                value = pop2();
-                printf("Popped Value: %d\n", value);
             break;
             case 3:
                 printf("Enter Number\n");
@@ -94,8 +94,7 @@ int main()
             default:
                 printf("%d is an Invalid choice, Try Again...!!!\n", choice);
         }
-        //Enable for debug
-        //printDualStackData();
+        printDualStackData();
     }
     
     //Return 0 for Success Execution
