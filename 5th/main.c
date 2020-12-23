@@ -5,7 +5,7 @@
 #define STACK_SIZE 11
 
 //Global Variables
-struct dualStack {
+struct tripleStack {
     int basePointer1;
     int stackPointer1;
     int basePointer2;
@@ -120,7 +120,7 @@ int main()
             default:
                 printf("%d is an Invalid choice, Try Again...!!!\n", choice);
         }
-        printDualStackData();
+        //printDualStackData();
     }
     
     //Destroy Stack
@@ -201,6 +201,7 @@ int pop3()
 
 void initStack()
 {
+    //Equal Partitioning Method is used here, Other algos can be applied too depending on the use case
     stackHead.basePointer1 = 0;
     stackHead.basePointer2 = STACK_SIZE/3;
     stackHead.basePointer3 = (STACK_SIZE/3)*2;
