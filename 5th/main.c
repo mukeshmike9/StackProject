@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h> //for malloc
-#define STACK_SIZE 5
+#define STACK_SIZE 11
 
 //Global Variables
 struct dualStack {
@@ -36,12 +36,20 @@ void initStack(void);
 int push1(int value);
 
 /**
- * @brief Push data to stack 1
+ * @brief Push data to stack 2
  * 
  * @param value : Value to be pushed
  * @return int -1 if error, else 0
  */
 int push2(int value);
+
+/**
+ * @brief Push data to stack 3
+ * 
+ * @param value : Value to be pushed
+ * @return int -1 if error, else 0
+ */
+int push3(int value);
 
 /**
  * @brief This pops a vlue from Stack 1
@@ -57,6 +65,13 @@ int pop1();
  */
 int pop2();
 
+/**
+ * @brief This pops a vlue from Stack 3
+ * 
+ * @return int popped value from stack
+ */
+int pop3();
+
 //Return 0 to the calling OS for success execution
 int main()
 {
@@ -66,7 +81,7 @@ int main()
     int value;
     while(loop)
     {
-        printf("Enter Your Choice:\n1> Pop 1\n2> Pop 2\n3> Push 1\n4> Push 2\n0> Exit\n");
+        printf("Enter Your Choice:\n1> Pop 1\n2> Pop 2\n3> Pop 3\n4> Push 1\n5> Push 2\n6> Push 3\n0> Exit\n");
         scanf("%d", &choice);
 
         //Stack operations to be done based on choice
@@ -77,16 +92,27 @@ int main()
                 printf("Popped Value: %d\n", value);
             break;
             case 2:
+                value = pop2();
+                printf("Popped Value: %d\n", value);
             break;
             case 3:
-                printf("Enter Number\n");
-                scanf("%d", &value);
-                push1(value);
+                value = pop3();
+                printf("Popped Value: %d\n", value);
             break;
             case 4:
                 printf("Enter Number\n");
                 scanf("%d", &value);
+                push1(value);
+            break;
+            case 5:
+                printf("Enter Number\n");
+                scanf("%d", &value);
                 push2(value);
+            break;
+            case 6:
+                printf("Enter Number\n");
+                scanf("%d", &value);
+                push3(value);
             break;
             case 0:
                 loop = 0;
@@ -97,6 +123,9 @@ int main()
         printDualStackData();
     }
     
+    //Destroy Stack
+    free(stackHead.array);
+
     //Return 0 for Success Execution
     return 0;
 }
@@ -104,7 +133,7 @@ int main()
 int push1(int value)
 {
     //Check for data overlap
-    if(stackHead.stackPointer1 >= (stackHead.stackPointer2 - 1))
+    if(stackHead.stackPointer1 >= (stackHead.basePointer2 - 1))
     {
         printf("Stack Overflow...!!!\n");
         return -1;
@@ -116,18 +145,30 @@ int push1(int value)
 int push2(int value)
 {
     //Check for data overlap
-    if(stackHead.stackPointer2 <= (stackHead.stackPointer1 + 1))
+    if(stackHead.stackPointer2 >= (stackHead.basePointer3 - 1))
     {
         printf("Stack Overflow...!!!\n");
         return -1;
     }
-    stackHead.array[--stackHead.stackPointer2] = value;
+    stackHead.array[++stackHead.stackPointer2] = value;
+    return 0;
+}
+
+int push3(int value)
+{
+    //Check for out of Memory Bounds
+    if(stackHead.stackPointer3 >= (STACK_SIZE - 1))
+    {
+        printf("Stack Overflow...!!!\n");
+        return -1;
+    }
+    stackHead.array[++stackHead.stackPointer3] = value;
     return 0;
 }
 
 int pop1()
 {
-    if(stackHead.stackPointer1 < 0)
+    if(stackHead.stackPointer1 < stackHead.basePointer1)
     {
         printf("Stack Empty...!!!\n");
         return -1;
@@ -138,23 +179,34 @@ int pop1()
 
 int pop2()
 {
-    //As stack size is already +1 than array index we need to check for equal value too
-    if(stackHead.stackPointer2 >= STACK_SIZE)
+    if(stackHead.stackPointer2 < stackHead.basePointer2)
     {
         printf("Stack Empty...!!!\n");
         return -1;
     }
 
-    return stackHead.array[stackHead.stackPointer2++];
+    return stackHead.array[stackHead.stackPointer2--];
 }
 
+int pop3()
+{
+    if(stackHead.stackPointer3 < stackHead.basePointer3)
+    {
+        printf("Stack Empty...!!!\n");
+        return -1;
+    }
+
+    return stackHead.array[stackHead.stackPointer3--];
+}
 
 void initStack()
 {
     stackHead.basePointer1 = 0;
-    stackHead.basePointer2 = STACK_SIZE - 1; //1 less because offset starts from 0
+    stackHead.basePointer2 = STACK_SIZE/3;
+    stackHead.basePointer3 = (STACK_SIZE/3)*2;
     stackHead.stackPointer1 = stackHead.basePointer1 - 1;
-    stackHead.stackPointer2 = stackHead.basePointer2 + 1;
+    stackHead.stackPointer2 = stackHead.basePointer2 - 1;
+    stackHead.stackPointer3 = stackHead.basePointer3 - 1;
     stackHead.array = (int*) malloc(STACK_SIZE); 
 
     for (int i = 0; i < STACK_SIZE; i++)
@@ -167,11 +219,13 @@ void initStack()
 void printDualStackData()
 {
     printf("Dual Stack Data:\n");
-    printf("Base Pointer 1: %d\nStack Pointer 1: %d\nBase Pointer 2: %d\nStack Pointer 2: %d\n",
+    printf("Base Pointer 1: %d\nStack Pointer 1: %d\nBase Pointer 2: %d\nStack Pointer 2: %d\nBase Pointer 3: %d\nStack Pointer 3: %d\n",
            stackHead.basePointer1,
            stackHead.stackPointer1,
            stackHead.basePointer2,
-           stackHead.stackPointer2);
+           stackHead.stackPointer2,
+           stackHead.basePointer3,
+           stackHead.stackPointer3);
 
     for (int i = 0; i < STACK_SIZE; i++)
     {

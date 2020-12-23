@@ -34,7 +34,7 @@ void initStack(void);
 int push1(int value);
 
 /**
- * @brief Push data to stack 1
+ * @brief Push data to stack 2
  * 
  * @param value : Value to be pushed
  * @return int -1 if error, else 0
@@ -98,6 +98,9 @@ int main()
         //printDualStackData();
     }
     
+    //Destroy Stack
+    free(stackHead.array);
+
     //Return 0 for Success Execution
     return 0;
 }
